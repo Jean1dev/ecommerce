@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "234137561137",
+    "firebase_url": "https://neuraapp-d16f5.firebaseio.com",
+    "project_id": "neuraapp-d16f5",
+    "storage_bucket": "neuraapp-d16f5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234137561137:android:ebe61cc11984e654",
+        "android_client_info": {
+          "package_name": "com.ecommerce.ecommerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "234137561137-14csq1n6u58f874q88o134o5ed9gscd5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsTXEh6XgPLLyDho0O47mnEWaaZGu-SJU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
