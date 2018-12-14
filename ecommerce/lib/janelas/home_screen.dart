@@ -1,14 +1,23 @@
+import 'package:ecommerce/tabs/home_tab.dart';
+import 'package:ecommerce/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final _pageController = new PageController();
+
     // TODO: implement build
     return PageView(
+      controller: _pageController,
+      physics: NeverScrollableScrollPhysics(),
       children: <Widget>[
-        Container(color: Colors.yellow,),
-        Container(color: Colors.red)
+        Scaffold(
+          body: HomeTab(),
+          drawer: CustomDrawer(),
+        )
       ],
     );
   }
