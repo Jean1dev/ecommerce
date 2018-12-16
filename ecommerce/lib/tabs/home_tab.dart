@@ -35,7 +35,7 @@ class HomeTab extends StatelessWidget {
               ),
             ),
             FutureBuilder<QuerySnapshot>(
-                future: Firestore.instance.collection("home").orderBy("pos").getDocuments(),
+              future: Firestore.instance.collection("home").orderBy("pos").getDocuments(),
               builder: (context, snapshot){
                   if(!snapshot.hasData){
                     return SliverToBoxAdapter(
@@ -49,8 +49,6 @@ class HomeTab extends StatelessWidget {
                     );
                   }
                   else{
-                    print("aqui");
-                    print(snapshot.data.documents);
                     return SliverStaggeredGrid.count(
                       crossAxisCount: 2,
                       mainAxisSpacing: 1.0,

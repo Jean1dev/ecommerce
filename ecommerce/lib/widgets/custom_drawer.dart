@@ -1,6 +1,13 @@
+import 'package:ecommerce/menu/Drawer_menu.dart';
 import 'package:flutter/material.dart';
 
 class CustomDrawer extends StatelessWidget {
+
+
+  final PageController pageController;
+
+  CustomDrawer(this.pageController);
+
   @override
   Widget build(BuildContext context) {
 
@@ -35,10 +42,42 @@ class CustomDrawer extends StatelessWidget {
                       top: 8.0,
                       left: 0.0,
                       child: Text("Ecommerce",style: TextStyle(fontSize: 34.0, fontWeight: FontWeight.bold),),
+                    ),
+                    Positioned(
+                      left: 0.0,
+                      bottom: 0.0,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text("Ola,",
+                            style: TextStyle(
+                                fontSize: 18.0,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          GestureDetector(
+                            child: Text(
+                              "Entre ou Cadastra-se",
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            onTap: (){
+                              // AO CLICAR EXECUTA AQUI
+                            },
+                          )
+                        ],
+                      ),
                     )
                   ],
                 ),
-              )
+              ),
+              Divider(),
+              ItemMenu(Icons.home, "Inicio", pageController, 0),
+              ItemMenu(Icons.list, "Produtos", pageController, 1),
+              ItemMenu(Icons.location_on, "Lojas", pageController, 2),
+              ItemMenu(Icons.playlist_add_check, "Meus pedidos", pageController, 3),
             ],
           )
         ],
