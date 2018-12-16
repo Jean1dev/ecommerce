@@ -1,3 +1,4 @@
+import 'package:ecommerce/janelas/Login_screen.dart';
 import 'package:ecommerce/menu/Drawer_menu.dart';
 import 'package:flutter/material.dart';
 
@@ -65,6 +66,9 @@ class CustomDrawer extends StatelessWidget {
                             ),
                             onTap: (){
                               // AO CLICAR EXECUTA AQUI
+                              Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) => LoginScreen())
+                              );
                             },
                           )
                         ],
