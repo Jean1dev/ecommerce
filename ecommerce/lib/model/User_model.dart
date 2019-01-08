@@ -40,4 +40,17 @@ class UserModel extends Model{
     await Firestore.instance.collection("usuarios").document(firebaseUser.uid).setData(user);
   }
 
+  bool isLoggedIn(){
+    return firebaseUser != null;
+  }
+
+  Future signOut() async {
+    await fire.signOut();
+
+    userData = Map();
+    firebaseUser = null;
+
+    notifyListeners();
+  }
+
 }
