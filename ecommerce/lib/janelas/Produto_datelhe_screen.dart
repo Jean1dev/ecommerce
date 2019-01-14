@@ -1,5 +1,10 @@
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:ecommerce/janelas/Carrinho_screen.dart';
+import 'package:ecommerce/janelas/Login_screen.dart';
+import 'package:ecommerce/model/Carrinho.dart';
+import 'package:ecommerce/model/Carrinho_model.dart';
 import 'package:ecommerce/model/Produto.dart';
+import 'package:ecommerce/model/User_model.dart';
 import 'package:flutter/material.dart';
 
 class ProdutoDetalheScreen extends StatefulWidget {
@@ -106,9 +111,28 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
                 SizedBox(
                   height: 44.0,
                   child: RaisedButton(
-                    onPressed: this.size != null ? (){} : null,
+                    onPressed: this.size != null ? (){
+                      if(UserModel.of(context).isLoggedIn()){
+
+                        Carrinho item = Carrinho();
+                        item.size = size;
+                        item.qtd = 1;
+                        item.produto_id = produto.id;
+                        item.categoria = produto.categoria;
+
+                        CarrinhoModel.of(context).addItem(item);
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => CarrinhoScreen())
+                        );
+
+                      }else {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => LoginScreen())
+                        );
+                      }
+                    } : null,
                     child: Text(
-                      "Adicionar ao carrinho",
+                      UserModel.of(context).isLoggedIn() ? "Adicionar ao carrinho" : "Entre para Comprar",
                       style: TextStyle(fontSize: 18.0),
                     ),
                     color: primary,

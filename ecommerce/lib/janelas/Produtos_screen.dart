@@ -43,14 +43,18 @@ class ProdutoScreen extends StatelessWidget {
                           ),
                           itemCount: snapshot.data.documents.length,
                           itemBuilder: (context, index){
-                            return ProdutoItem("grid", Produto.fromDocument(snapshot.data.documents[index]));
+                            Produto data = Produto.fromDocument(snapshot.data.documents[index]);
+                            data.categoria = this.snapshot.documentID;
+                            return ProdutoItem("grid", data);
                           }
                       ),
                       ListView.builder(
                         padding: EdgeInsets.all(4.0),
                         itemCount: snapshot.data.documents.length,
                         itemBuilder: (context, index){
-                          return ProdutoItem("list", Produto.fromDocument(snapshot.data.documents[index]));
+                          Produto data = Produto.fromDocument(snapshot.data.documents[index]);
+                          data.categoria = this.snapshot.documentID;
+                          return ProdutoItem("list", data);
                         }
                       )
                     ]
