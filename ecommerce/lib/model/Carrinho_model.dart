@@ -10,7 +10,11 @@ class CarrinhoModel extends Model {
   bool isLoading = false;
   UserModel user;
 
-  CarrinhoModel(this.user);
+  CarrinhoModel(this.user){
+    if(user.isLoggedIn()){
+      _loadCartItens();
+    }
+  }
 
   static CarrinhoModel of(BuildContext context) => ScopedModel.of<CarrinhoModel>(context);
 
@@ -30,5 +34,31 @@ class CarrinhoModel extends Model {
     products.remove(item);
     notifyListeners();
   }
+
+  void decProduto(Carrinho item){
+    item.qtd--;
+    
+    Firestore.instance.collection("usuarios").document(user.firebaseUser.uid).collection("carrinho")
+    .document(item.cid).updateData(item.toMap());
+    notifyListeners();
+  }
+
+  void incProduto(Carrinho item){
+    item.qtd++;
+
+    Firestore.instance.collection("usuarios").document(user.firebaseUser.uid).collection("carrinho")
+        .document(item.cid).updateData(item.toMap());
+    notifyListeners();
+  }
+
+  //ATENCAO AQUI
+  void _loadCartItens() async {
+    QuerySnapshot query = await Firestore.instance.collection("usuarios").document(user.firebaseUser.uid).collection("carrinho")
+        .getDocuments() as QuerySnapshot;
+
+    products = query.documents.map((doc) => Carrinho.fromDocument(doc)).toList();
+    notifyListeners();
+  }
+
 
 }

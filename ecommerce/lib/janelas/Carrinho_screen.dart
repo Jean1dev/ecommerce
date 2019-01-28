@@ -1,6 +1,8 @@
 import 'package:ecommerce/janelas/Login_screen.dart';
 import 'package:ecommerce/model/Carrinho_model.dart';
 import 'package:ecommerce/model/User_model.dart';
+import 'package:ecommerce/tiles/cart_tile.dart';
+import 'package:ecommerce/widgets/discount_card.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -65,6 +67,17 @@ class CarrinhoScreen extends StatelessWidget {
                 child: Text("Nenhum produto no carrinho",
                   style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,),
+              );
+            }else {
+              return ListView(
+                children: <Widget>[
+                  Column(
+                    children: model.products.map((produto){
+                      return CartTile(produto);
+                    }).toList(),
+                  ),
+                  DiscountCard()
+                ],
               );
             }
           }
