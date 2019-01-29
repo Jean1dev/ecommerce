@@ -119,6 +119,7 @@ class _ProdutoDetalheScreenState extends State<ProdutoDetalheScreen> {
                         item.qtd = 1;
                         item.produto_id = produto.id;
                         item.categoria = produto.categoria;
+                        item.data = produto;
 
                         CarrinhoModel.of(context).addItem(item);
                         Navigator.of(context).push(

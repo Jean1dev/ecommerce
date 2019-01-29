@@ -7,6 +7,8 @@ import 'package:scoped_model/scoped_model.dart';
 class CarrinhoModel extends Model {
 
   List<Carrinho> products = [];
+  String cupomCode;
+  int discountPercent = 0;
   bool isLoading = false;
   UserModel user;
 
@@ -60,5 +62,74 @@ class CarrinhoModel extends Model {
     notifyListeners();
   }
 
+  void setDesconto(String cupomCode, int percent){
+    this.cupomCode = cupomCode;
+    this.discountPercent = percent;
+  }
 
+  double getProductsPrice(){
+    double price = 0.0;
+    for(Carrinho c in products){
+      if(c.data != null){
+        price += c.qtd * c.data.price;
+      }
+    }
+    return price;
+  }
+
+  double getShipPrice(){
+    return 0.0;
+  }
+
+  double getDiscount(){
+    return this.getProductsPrice() * this.discountPercent / 100;
+  }
+
+  void updatePrices(){
+    notifyListeners();
+  }
+  
+  Future<String> finishOrder() async {
+    if(products.length == 0){
+      return "";
+    }
+    
+    isLoading = true;
+    notifyListeners();
+    double prod_price = getProductsPrice();
+    double ship_price = getShipPrice();
+    double disc_price = getDiscount();
+    
+    DocumentReference ref = await Firestore.instance.collection("pedidos").add(
+      {
+        "clienteId": user.firebaseUser.uid,
+        "products": products.map((Carrinho) => Carrinho.toMap()).toList(),
+        "shipPrice": ship_price,
+        "productPrice": prod_price,
+        "discPrice": disc_price,
+        "total": prod_price + ship_price - disc_price,
+        "status": 1
+      }
+    );
+    
+    Firestore.instance.collection("usuarios").document(user.firebaseUser.uid).collection("pedidos").document(ref.documentID).setData(
+      {
+        "id": ref.documentID
+      }
+    );
+    
+    QuerySnapshot query = await Firestore.instance.collection("usuarios").document(user.firebaseUser.uid).collection("carrinho").getDocuments();
+
+    for(DocumentSnapshot doc in query.documents){
+      doc.reference.delete();
+    }
+
+    products.clear();
+    discountPercent = 0;
+    cupomCode = null;
+    isLoading = false;
+    notifyListeners();
+
+    return ref.documentID;
+  }
 }

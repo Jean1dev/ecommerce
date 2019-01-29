@@ -1,8 +1,11 @@
 import 'package:ecommerce/janelas/Login_screen.dart';
+import 'package:ecommerce/janelas/order_screen.dart';
 import 'package:ecommerce/model/Carrinho_model.dart';
 import 'package:ecommerce/model/User_model.dart';
 import 'package:ecommerce/tiles/cart_tile.dart';
+import 'package:ecommerce/widgets/cart_price.dart';
 import 'package:ecommerce/widgets/discount_card.dart';
+import 'package:ecommerce/widgets/ship_card.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -76,7 +79,16 @@ class CarrinhoScreen extends StatelessWidget {
                       return CartTile(produto);
                     }).toList(),
                   ),
-                  DiscountCard()
+                  DiscountCard(),
+                  ShipCard(),
+                  CartPrice(() async{
+                    String cod = await model.finishOrder();
+                    if(cod != null){
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => OrderScreen(cod))
+                      );
+                    }
+                  })
                 ],
               );
             }
