@@ -71,6 +71,7 @@ class CartPrice extends StatelessWidget {
                   child: Text("Finalizar Pedido"),
                   textColor: Colors.white,
                   color: Theme.of(context).primaryColor,
+                  onPressed: buy,
                 )
               ],
             );
