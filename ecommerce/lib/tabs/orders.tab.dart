@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class OrdersTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    if(UserModel.of(context).isLoading){
+    if(UserModel.of(context).isLoggedIn()){
 
       String uid = UserModel.of(context).firebaseUser.uid;
 
